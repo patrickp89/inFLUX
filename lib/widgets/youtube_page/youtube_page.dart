@@ -14,14 +14,14 @@ class YoutubePage extends StatefulWidget {
   YoutubePage({this.youtubeApiAdapter, Key key}) : super(key: key);
 
   @override
-  YoutubePageState createState() => new YoutubePageState();
+  _YoutubePageState createState() => _YoutubePageState();
 }
 
-class YoutubePageState extends State<YoutubePage> {
+class _YoutubePageState extends State<YoutubePage> {
   static const _videoBatchSize = 20;
   final YoutubeApiAdapter _youtubeApiAdapter;
 
-  YoutubePageState({YoutubeApiAdapter youtubeApiAdapter})
+  _YoutubePageState({YoutubeApiAdapter youtubeApiAdapter})
       : _youtubeApiAdapter = youtubeApiAdapter ?? YoutubeApiAdapter();
 
   @override

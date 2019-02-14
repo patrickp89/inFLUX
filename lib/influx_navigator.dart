@@ -3,12 +3,14 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:influx/widgets/rss_feed_page.dart';
 import 'package:influx/widgets/twitter/twitter_page.dart';
 import 'package:influx/widgets/youtube_page/youtube_page.dart';
+import 'package:influx/widgets/home_page.dart';
 
 class InFluxNavigator{
   static final pages = <Page>[
-    Page(index: 0, name: 'Youtube', body: YoutubePage(), icon: Icon(FontAwesomeIcons.youtube)),
-    Page(index: 1, name: 'Rss Feed',body: RssFeedPage(), icon: Icon(FontAwesomeIcons.rss)),
-    Page(index: 2, name: 'Twitter', body:  TwitterPage(), icon: Icon(FontAwesomeIcons.twitter))
+    Page(index: 0, name: 'Home', body: HomePage(), icon: Icon(FontAwesomeIcons.home)),
+    Page(index: 1, name: 'Youtube', body: YoutubePage(), icon: Icon(FontAwesomeIcons.youtube)),
+    Page(index: 2, name: 'Rss Feed',body: RssFeedPage(), icon: Icon(FontAwesomeIcons.rss)),
+    Page(index: 3, name: 'Twitter', body:  TwitterPage(), icon: Icon(FontAwesomeIcons.twitter))
   ];
 
   static final render = (int index) => pages.where((page) => page.index == index).map((page)=> page.body).single;
