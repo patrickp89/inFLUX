@@ -15,7 +15,8 @@ class RssFeedReader {
   RssFeedReader(
       {@required this.url,
       RssFeed Function(String xmlString) rssFeedParser,
-      http.Client httpClient})
+      http.Client httpClient,
+      Stream<RssPost> rssPostsStream})
       : rssFeedParser = rssFeedParser ?? defaultRssFeedParser,
         httpClient = httpClient ?? http.Client();
 

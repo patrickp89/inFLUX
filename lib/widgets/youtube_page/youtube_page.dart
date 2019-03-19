@@ -11,7 +11,8 @@ import 'package:influx/widgets/youtube_page/youtube_video_list_item.dart';
 class YoutubePage extends StatefulWidget {
   final YoutubeApiAdapter youtubeApiAdapter;
 
-  YoutubePage({this.youtubeApiAdapter, Key key}) : super(key: key);
+  YoutubePage(List<YoutubeVideoInfo> data, {this.youtubeApiAdapter, Key key})
+      : super(key: key);
 
   @override
   _YoutubePageState createState() => _YoutubePageState();
@@ -26,7 +27,6 @@ class _YoutubePageState extends State<YoutubePage> {
 
   @override
   Widget build(BuildContext context) {
-    print("building youtube_page");
     return FutureBuilder<YoutubeChannelInfo>(
         future: _youtubeApiAdapter.getChannelInfo(
             channelId: InFluxConfig.youtubeChannelId,

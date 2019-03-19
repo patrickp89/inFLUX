@@ -7,16 +7,20 @@ import 'package:intl/intl.dart';
 /// A widget that displays contents from an RSS feed.
 class RssFeedPage extends StatefulWidget {
   final RssFeedReader rssFeedReader;
-  const RssFeedPage({this.rssFeedReader, Key key}) : super(key: key);
+  final Stream<RssPost> rssPostsStream;
+  const RssFeedPage({this.rssFeedReader, @required  this.rssPostsStream, Key key})
+      : super(key: key);
 
   @override
-  _RssFeedState createState() => _RssFeedState(rssFeedReader: rssFeedReader);
+  _RssFeedState createState() => _RssFeedState(
+      rssFeedReader: rssFeedReader, rssPostsStream: rssPostsStream);
 }
 
 class _RssFeedState extends State<RssFeedPage> {
   final int _maxRssFeedItems = 20;
   final _formatter = DateFormat('dd.MM.yyyy HH:mm:ss');
 
+  final Stream<RssPost> _rssPostsStream;
   final RssFeedReader _rssFeedReader;
   final ScrollController _scrollController = ScrollController();
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
@@ -25,9 +29,11 @@ class _RssFeedState extends State<RssFeedPage> {
   int _lastRssFeedIndex = 0;
   List<RssPost> _rssPosts = List();
 
-  _RssFeedState({RssFeedReader rssFeedReader})
-      : _rssFeedReader =
-            rssFeedReader ?? RssFeedReader(url: InFluxConfig.rssFeedUrl);
+  _RssFeedState(
+      {RssFeedReader rssFeedReader, @required Stream<RssPost> rssPostsStream})
+      : _rssPostsStream = rssPostsStream,
+        _rssFeedReader = rssFeedReader ??
+            RssFeedReader(url: InFluxConfig.rssFeedUrl, rssPostsStream: rssPostsStream);
 
   @override
   initState() {
@@ -37,12 +43,14 @@ class _RssFeedState extends State<RssFeedPage> {
 
   @override
   Widget build(BuildContext context) {
-    final rssPosts = _rssFeedReader.fetchRssPostsFromIndex(
-        _lastRssFeedIndex, _maxRssFeedItems);
+//    final rssPosts = _rssFeedReader.fetchRssPostsFromIndex(
+//        _lastRssFeedIndex, _maxRssFeedItems);
+    _rssFeedReader.fetchRssPostsFromIndex(_lastRssFeedIndex, _maxRssFeedItems);
 
     return Material(
         child: Center(
-      child: FutureBuilder(
+//      child: FutureBuilder(
+      child: StreamBuilder(
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             // ensure that no duplicates were fetched:
@@ -76,7 +84,9 @@ class _RssFeedState extends State<RssFeedPage> {
             return CircularProgressIndicator();
           }
         },
-        future: rssPosts,
+//        future: rssPosts,
+//        stream: Stream.fromFuture(rssPosts),
+        stream: _rssPostsStream,
       ),
     ));
   }

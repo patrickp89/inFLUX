@@ -40,16 +40,20 @@ class InfinityScrollListTimeBased<T> extends StatefulWidget {
   }
 
   @override
-  State<StatefulWidget> createState() => InfinityScrollListTimeBasedState<T>();
+  State<StatefulWidget> createState() => InfinityScrollListTimeBasedState<T>(List());
 }
 
 class InfinityScrollListTimeBasedState<T> extends State<InfinityScrollListTimeBased<T>> {
 
+  InfinityScrollListTimeBasedState(List<T> data)
+      : _data = data;
+
   // state
   DateTime _loadItemsOlderThan = DateTime.now();
-  List<T> _data = List();
+  List<T> _data;
 
   final _scrollController = ScrollController();
+
 
   Future<List<T>> _loadData(DateTime olderThan) async {
     var data = await this.widget.dataSupplierTimeBased(olderThan: olderThan.subtract(Duration(milliseconds: 1)), size: this.widget.batchSize);

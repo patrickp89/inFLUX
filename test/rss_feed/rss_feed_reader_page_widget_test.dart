@@ -14,11 +14,16 @@ void main() {
         return Response(mockRssResponse, 200);
       });
 
+      final Stream<RssPost> rssPostsStream =
+          Stream<RssPost>.empty(); // TODO: create Mock StreamController!
+
       // wrap the RssFeedReader widget with a MaterialApp in order to have a MediaQuery object:
       final testWidget = MaterialApp(
           home: RssFeedPage(
-              rssFeedReader: RssFeedReader(
-                  url: InFluxConfig.rssFeedUrl, httpClient: mockHttpClient)));
+        rssFeedReader: RssFeedReader(
+            url: InFluxConfig.rssFeedUrl, httpClient: mockHttpClient),
+        rssPostsStream: rssPostsStream,
+      ));
 
       // pump the widget:
       await tester.runAsync(() async {
