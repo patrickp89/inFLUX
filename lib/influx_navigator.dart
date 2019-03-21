@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:influx/widgets/rss_feed_page.dart';
+import 'package:influx/widgets/rss_feed/rss_feed_page.dart';
 import 'package:influx/widgets/twitter/twitter_page.dart';
 import 'package:influx/widgets/youtube_page/youtube_page.dart';
 import 'package:influx/widgets/home_page.dart';
 import 'package:influx/utility/youtube/model/youtube_video_info.dart';
 import 'package:influx/utility/rss_feed/rss_feed_reader.dart';
+import 'package:influx/widgets/rss_feed/rss_feed_stream_controller.dart';
 
 class InFluxNavigator {
   static var youtubeData = List<YoutubeVideoInfo>();
 
-  static final Stream<RssPost> rssPostsStream = Stream<RssPost>.empty(); // TODO: create StreamController!
+  static final Stream<RssPost> rssPostsStream = RssFeedStreamController.createStream();
 
   static final pages = <Page>[
     Page(
